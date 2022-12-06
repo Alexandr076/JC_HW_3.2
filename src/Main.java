@@ -18,7 +18,7 @@ public class Main {
         }
     }
 
-    private static void zipAndDeleteFiles(String path, List<String> listOfObjects) {
+    private static void zipFiles(String path, List<String> listOfObjects) {
         FileInputStream fis = null;
         try (ZipOutputStream zipInputStream = new ZipOutputStream(new FileOutputStream(path))) {
             for (String a: listOfObjects) {
@@ -40,6 +40,9 @@ public class Main {
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private static void delete(List<String> listOfObjects) {
         for (String a: listOfObjects) {
             File gp = new File(a);
             gp.delete();
@@ -54,10 +57,14 @@ public class Main {
         saveGame("Games//savegames//gp3.dat",
                 new GameProgress(99, 99, 1, 1));
 
-        zipAndDeleteFiles("Games//savegames//zip.zip",new ArrayList<>(Arrays.asList(
+        List<String> arr = new ArrayList<>(Arrays.asList(
                 "Games//savegames//gp1.dat",
                 "Games//savegames//gp2.dat",
                 "Games//savegames//gp3.dat"
-        )));
+        ));
+
+        zipFiles("Games//savegames//zip.zip", arr);
+
+        delete(arr);
     }
 }
